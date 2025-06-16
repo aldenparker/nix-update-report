@@ -396,7 +396,7 @@ fn genrate_report(
 
             format!(
                 "# nix-update-report for {} -> {}\n\
-                Report generated using [`nix-update-reporter`]().\n\
+                Report generated using [`nix-update-reporter`](https://github.com/aldenparker/nix-update-report.git).\n\
                 \n\
                 NOTE: nix-update-report can only get top level packages. Packages like `nushellPlugins.formats` will have their top level, in this case `nushellPlugins`, shown as version `unknown`.\n\
                 \n\
@@ -431,7 +431,7 @@ fn genrate_report(
         }
         false => format!(
             "# nix-update-report for {} -> {}\n\
-            Report generated using [`nix-update-reporter`]().\n\
+            Report generated using [`nix-update-reporter`](https://github.com/aldenparker/nix-update-report.git).\n\
             \n\
             ## Stats\n\
             Total Added: {}\n\
