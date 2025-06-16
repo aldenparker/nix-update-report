@@ -225,7 +225,7 @@ impl PackagesCompareData {
                     .collect::<HashSet<String>>()
             })
             .reduce(|acc, new| acc.union(&new).map(|val| val.clone()).collect())
-            .unwrap()
+            .unwrap_or(HashSet::new())
             .len();
 
         let total_removed_archs = self.removed_archs.len();
@@ -392,7 +392,7 @@ fn genrate_report(
                     acc.push_str(e.as_str());
                     acc
                 })
-                .unwrap();
+                .unwrap_or("".into());
 
             format!(
                 "# nix-update-report for {} -> {}\n\
@@ -471,7 +471,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 let updated = (&pkgs.updated)
                     .into_iter()
@@ -510,7 +510,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 let removed = (&pkgs.removed)
                     .into_iter()
@@ -526,7 +526,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 // Create arch section
                 format!(
@@ -545,7 +545,7 @@ fn genrate_report(
                 acc.push_str(e.as_str());
                 acc
             })
-            .unwrap();
+            .unwrap_or("".into());
 
         report.push_str("## Pkg Changes\n");
         report.push_str(pkgs_by_arch.as_str());
@@ -569,7 +569,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 let updated = (&pkgs.updated)
                     .into_iter()
@@ -608,7 +608,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 let removed = (&pkgs.removed)
                     .into_iter()
@@ -624,7 +624,7 @@ fn genrate_report(
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap();
+                    .unwrap_or("None".into());
 
                 // Create arch section
                 format!(
