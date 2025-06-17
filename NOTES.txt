@@ -1,0 +1,8 @@
+multiple inputs
+feed it through a json full of what flakes or nixpkg hashes to hit, then spit out a report for each using the title to differentiate.
+
+nixpkgs
+need better way to find changes in nixpkgs. That or I need to consolidate update versions
+
+flakes
+flake needs to install gh command when running the package. Build inputs maybe? or shell
