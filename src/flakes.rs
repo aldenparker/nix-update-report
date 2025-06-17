@@ -26,7 +26,7 @@ impl PkgVersion {
     fn new(version_str: &String) -> PkgVersion {
         // Try to parse
         let regex_str = Regex::new(
-            r"(?<version>\d+(?:\.\d+)*)(?<version_extra>[a-zA-Z0-9]+)?-?(?:unstable-(?<unstable_date>\d{4}-\d{2}-\d{2}))?",
+            r"^(?<version>\d+(?:\.\d+)*)(?<version_extra>[a-zA-Z0-9]+)?-?(?:unstable-(?<unstable_date>\d{4}-\d{2}-\d{2}))?$",
         )
         .unwrap();
 
@@ -92,7 +92,7 @@ impl Package {
     fn new(full_name: &String, description: &Option<String>) -> Package {
         // Try to parse version from name
         let regex_str =
-            Regex::new(r"(?P<name>.*?)-(?P<version>(?:unstable-)?[0-9][0-9a-zA-Z.-]*)").unwrap();
+            Regex::new(r"^(?P<name>.*?)-(?P<version>(?:unstable-)?[0-9][0-9a-zA-Z.-]*)$").unwrap();
 
         let captures = regex_str.captures(full_name.as_str());
 
@@ -460,7 +460,7 @@ impl FlakePkgsCompareData {
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap_or("None".into());
+                    .unwrap_or("None\n".into());
 
                 let updated = (&pkgs.updated)
                     .iter()
@@ -469,14 +469,14 @@ impl FlakePkgsCompareData {
                             change_string,
                             version_change: _,
                             description_change: _,
-                        } => change_string.clone(),
+                        } => format!("{}\n", change_string),
                         _ => unreachable!(),
                     })
                     .reduce(|mut acc, e| {
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap_or("None".into());
+                    .unwrap_or("None\n".into());
 
                 let removed = (&pkgs.removed)
                     .iter()
@@ -492,7 +492,7 @@ impl FlakePkgsCompareData {
                         acc.push_str(e.as_str());
                         acc
                     })
-                    .unwrap_or("None".into());
+                    .unwrap_or("None\n".into());
 
                 // Create arch section
                 format!(
